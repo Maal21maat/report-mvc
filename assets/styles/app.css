@@ -4,9 +4,46 @@ body {
 
 body {
     margin: 0 auto;
-    max-width: 400px;
+    max-width: 600px;
 }
 
 h1 {
     border-bottom: 4px double #ccc;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+float: left;
+}
+
+li a {
+display: block;
+color: white;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+  li a:hover {
+    background-color: #111;
+}
+
+nav {
+    max-width: 600px;
+}
+
+.site-header {
+    background-size: cover;
+    height: 100px;
+}
+
+.site-title {
+    font-size: 2em;
 }
