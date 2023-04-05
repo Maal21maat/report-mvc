@@ -4,8 +4,25 @@
 
 {% block body %}
     <h1>Home</h1>
-    <p>Här är jag. Lite text om mig kommer att komma. Eller lite text om någon annan.</p>
+    <small> - om mig, eller kanske "mig", tillkom kmom01 -</small>
+    <p>
+        Här är jag. Mitt i allt! Allt händer nu. Då tänkte jag byta karriär. En del säger att 
+        jag är dålig på att tänka efter först. Jag har inte sett det så, men om jag tänker för 
+        mycket på nästa steg blir jag stående på ett ben. Så kan vi inte ha det.
+    </p>
+    <p>
+        Jag är sedan innan, ganska långt innan, utbildad ekonom. Tog examen mitt i en lågkonjunktur, 
+        fick vaska fram lite möjligheter med ljus och lykta. Nu har jag, som bekant, påbörjat en ny 
+        utbildning, och även här ser jag ut att bli klar mitt i en lågkonjunktur. Spännande. Får gå upp 
+        på vinden och plocka fram ljus och lykta.
+    </p>
+    <p>
+        Men vänta nu tänker den uppmärksamme, det här är ju första året, du hinner rida ut stormen 
+        innan. Det var just det, när man inte tänker efter först, så blir heller inte allting i rätt ordning. 
+        Jag går om denna kurs igen, första året blev det inge bra. Andra året känns det så mycket roligare. 
+        Beror troligt på att jag är lite smartare.
+    </p>
     <a href="{{ asset('img/me.jpg') }}">
-        <img src="{{ asset('img/me.jpg') }}" alt="me" width="200">
+        <img class="me-img" src="{{ asset('img/me.jpg') }}" alt="me">
     </a>
 {% endblock %}

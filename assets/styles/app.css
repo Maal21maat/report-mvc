@@ -1,10 +1,10 @@
 body {
-    background-color: lightgray;
+    background-color: rgb(161, 190, 196);
 }
 
 body {
     margin: 0 auto;
-    max-width: 600px;
+    max-width: 800px;
 }
 
 h1 {
@@ -16,7 +16,7 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: rgb(8, 50, 59);
 }
 
 li {
@@ -31,12 +31,12 @@ padding: 14px 16px;
 text-decoration: none;
 }
 
-  li a:hover {
-    background-color: #111;
+li a:hover {
+    background-color: rgb(0, 11, 14);
 }
 
 nav {
-    max-width: 600px;
+    max-width: 800px;
 }
 
 .site-header {
@@ -51,12 +51,29 @@ nav {
 
 .row {
     display: flex;
-    background-color: pink;
+    background-color: rgb(109, 165, 177);
 }
 
 .row > div {
-    background-color: red;
+    background-color: rgb(161, 190, 196);
     margin: 10px;
-    padding: 20px;
+    padding: 10px;
     text-align: left;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(109, 165, 177);
+    color: rgb(3, 18, 27);
+    text-align: center;
+}
+
+.me-img {
+    margin: 4em;
+    width: 300px;
+    float: none;
+    border:none;
 }
