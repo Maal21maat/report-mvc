@@ -19,6 +19,13 @@ ul {
     background-color: rgb(8, 50, 59);
 }
 
+ul .report-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
 li {
 float: left;
 }
@@ -29,6 +36,11 @@ color: white;
 text-align: center;
 padding: 14px 16px;
 text-decoration: none;
+}
+
+li a .report-list {
+    color: black;
+    text-decoration: underline;
 }
 
 li a:hover {
@@ -69,6 +81,7 @@ nav {
     background-color: rgb(109, 165, 177);
     color: rgb(3, 18, 27);
     text-align: center;
+    padding: 5px;
 }
 
 .me-img {
