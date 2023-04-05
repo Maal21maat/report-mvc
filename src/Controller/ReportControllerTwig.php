@@ -11,6 +11,7 @@ class ReportControllerTwig extends AbstractController
     #[Route("/lucky", name: "lucky")]
     public function number(): Response
     {
+
         $number = random_int(0, 100);
 
         $data = [
