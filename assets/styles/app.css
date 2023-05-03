@@ -7,6 +7,10 @@ body {
     max-width: 800px;
 }
 
+main {
+    padding-bottom: 50px;
+}
+
 h1 {
     border-bottom: 4px double #ccc;
 }
@@ -81,7 +85,7 @@ nav {
     background-color: rgb(109, 165, 177);
     color: rgb(3, 18, 27);
     text-align: center;
-    padding: 5px;
+    padding: 10px;
 }
 
 .me-img {

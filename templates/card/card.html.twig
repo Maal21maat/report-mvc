@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card{% endblock %}
+
+{% block body %}
+    <h1>Card</h1>
+    <small> - cardGame, tillkom kmom02 -</small>
+    <ul>
+        <li><a href="{{ path('card') }}">Home - Card</a></li>
+        <li><a href="{{ path('card/deck') }}">Deck</a></li>
+        <li><a href="{{ path('card/deck/shuffle') }}">Shuffle</a></li>
+        <li><a href="{{ path('card/deck/draw') }}">Draw</a></li>
+        <li><a href="{{ path('card/deck/draw/number') }}">Draw number</a></li>
+    </ul>
+
+    <p>
+        Här kommer det ett kortspel strax
+    </p>
+{% endblock %}

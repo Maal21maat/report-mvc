@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Deck{% endblock %}
+
+{% block body %}
+    <h1>Card Deck</h1>
+    <small> - cardGame, tillkom kmom02 -</small>
+    <ul>
+        <li><a href="{{ path('card') }}">Home - Card</a></li>
+        <li><a href="{{ path('card/deck') }}">Deck</a></li>
+        <li><a href="{{ path('card/deck/shuffle') }}">Shuffle</a></li>
+        <li><a href="{{ path('card/deck/draw') }}">Draw</a></li>
+        <li><a href="{{ path('card/deck/draw/number') }}">Draw number</a></li>
+    </ul>
+    <p>
+        Här kommer samtliga 52 kort att visas
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Suit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in sortedDeck %}
+            <tr>
+                <td>{{ card.rank }}</td>
+                <td>{{ card.suit }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
