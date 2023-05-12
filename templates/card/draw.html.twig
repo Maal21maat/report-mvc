@@ -19,19 +19,19 @@
     <table>
         <thead>
             <tr>
-                <th>Rank</th>
-                <th>Suit</th>
+                {# <th>Rank</th> #}
+                <th>Card</th>
             </tr>
         </thead>
         <tbody>
             {% for card in drawHand.getCards() %}
             <tr>
-                <td>{{ card.getRank() }}</td>
-                <td>{{ card.getSuit() }}</td>
+                {# <td>{{ card.getRank() }}</td> #}
+                <td>{{ card.display() }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    {{ include('flash.html.twig') }}
+
 {% endblock %}

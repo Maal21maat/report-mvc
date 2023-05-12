@@ -13,7 +13,7 @@ class Deck
         $suits = array('C', 'D', 'H', 'S');
         foreach ($ranks as $rank) {
             foreach ($suits as $suit) {
-                $card = new Card($rank, $suit);
+                $card = new CardUtf($rank, $suit);
                 array_push($this->cards, $card);
             }
         }

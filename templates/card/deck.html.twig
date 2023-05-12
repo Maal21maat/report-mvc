@@ -15,18 +15,21 @@
     </ul>
     <p>Här finns de {{ numberCards }} kort kvar i kortleken.</p>
     <p>Kortleken är {{ deckStatus }}.</p>
+
+    {{ include('flash.html.twig') }}
+    
     <table>
         <thead>
             <tr>
-                <th>Rank</th>
-                <th>Suit</th>
+                {# <th>Rank</th> #}
+                <th>Card</th>
             </tr>
         </thead>
         <tbody>
             {% for card in gameDeck %}
             <tr>
-                <td>{{ card.rank }}</td>
-                <td>{{ card.suit }}</td>
+                {# <td>{{ card.rank }}</td> #}
+                <td>{{ card.display }}</td>
             </tr>
             {% endfor %}
         </tbody>

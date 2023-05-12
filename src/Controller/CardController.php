@@ -91,7 +91,6 @@ class CardController extends AbstractController
     {
         if (empty($session->get("game_deck"))) {
             $gameDeck = new Deck();
-            $gameDeck->makeDeck();
             $drawHand = new Hand();
             $cardsCount = count($gameDeck->getCards());
             $session->set("game_deck", $gameDeck);
@@ -130,32 +129,39 @@ class CardController extends AbstractController
         if (empty($session->get("game_deck"))) {
             $gameDeck = new Deck();
             $gameDeck->shuffleDeck();
-            $drawHand = new Hand();
             $cardsCount = count($gameDeck->getCards());
             $session->set("game_deck", $gameDeck);
             $session->set("game_cards_in_deck", $cardsCount);
-            $session->set("game_hand", $drawHand);
         }
-        
+
         $gameDeck = $session->get("game_deck");
-        $drawHand = new Hand();
-        $cards = $gameDeck->draw($num);
-        foreach ($cards as $card) {
-            $drawHand->addCard($card);
-        }
         $cardsCount = count($gameDeck->getCards());
+        $drawHand = new Hand();
 
-        $session->set("game_number_of_cards", $num);
-        $session->set("game_deck", $gameDeck);
-        $session->set("game_cards_in_deck", $cardsCount);
-        $session->set("game_hand", $drawHand);
+        if ($num <= $cardsCount) {
+            $cards = $gameDeck->draw($num);
+            foreach ($cards as $card) {
+                $drawHand->addCard($card);
+            }
+            $cardsCount = count($gameDeck->getCards());
 
-        $data = [
-            "gameDrawNumberCards" => $session->get("game_number_of_cards"),
-            "gameCardsLeftDeck" => $session->get("game_cards_in_deck"),
-            "drawHand" => $session->get("game_hand"),
-        ];
+            $session->set("game_number_of_cards", $num);
+            $session->set("game_deck", $gameDeck);
+            $session->set("game_cards_in_deck", $cardsCount);
+            $session->set("game_hand", $drawHand);
 
-        return $this->render('card/draw.html.twig', $data);
+            $data = [
+                "gameDrawNumberCards" => $session->get("game_number_of_cards"),
+                "gameCardsLeftDeck" => $session->get("game_cards_in_deck"),
+                "drawHand" => $session->get("game_hand"),
+            ];
+
+            return $this->render('card/draw.html.twig', $data);
+
+
+        } else {
+            $this->addFlash('warning', 'Du försökte dra fler kort än vad som finns i kortleken');
+            return $this->redirectToRoute('card_deck');
+        }
     }
 }
