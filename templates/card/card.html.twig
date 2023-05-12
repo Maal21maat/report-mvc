@@ -15,6 +15,24 @@
     </ul>
 
     <p>
-        Text
+        I Projektet Card finns 4 klasser, nedan följerUML klassdiagram samt kort beskrivning av dessa.
     </p>
+
+    <h2>class Card </h2>
+    <p>Representerar ett spelkort med färg och valör.</p>
+
+    <h2>class CardUtf </h2>
+    <p>Utökar (arv) class Card och skapar kort med en symbol</p>
+
+    <h2>class Deck </h2>
+    <p>En kortlek med 52 kort, som skapas sina kort med CardUtf.</p>
+
+    <h2>class Hand </h2>
+    <p>En hand som håller kortens som dras.</p>
+
+    <a href="{{ asset('img/card.jpg') }}">
+        <img class="card-img" src="{{ asset('img/card.jpg') }}" alt="uml">
+    </a>
+
+    
 {% endblock %}
