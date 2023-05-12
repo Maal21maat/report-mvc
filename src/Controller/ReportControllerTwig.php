@@ -39,9 +39,4 @@ class ReportControllerTwig extends AbstractController
         return $this->render('about.html.twig');
     }
 
-    #[Route("/card", name: "card")]
-    public function card(): Response
-    {
-        return $this->render('card/card.html.twig');
-    }
 }

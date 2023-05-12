@@ -6,14 +6,32 @@
     <h1>Card Deck Draw</h1>
     <small> - cardGame, tillkom kmom02 -</small>
     <ul>
-        <li><a href="{{ path('card') }}">Home - Card</a></li>
-        <li><a href="{{ path('card/deck') }}">Deck</a></li>
-        <li><a href="{{ path('card/deck/shuffle') }}">Shuffle</a></li>
-        <li><a href="{{ path('card/deck/draw') }}">Draw</a></li>
-        <li><a href="{{ path('card/deck/draw/number') }}">Draw number</a></li>
+        <li><a href="{{ path('card') }}">Card, Home</a></li>
+        <li><a href="{{ path('card_reset') }}">Reset Session</a></li>
+        <li><a href="{{ path('card_deck') }}">Deck</a></li>
+        <li><a href="{{ path('card_shuffle') }}">Shuffle</a></li>
+        <li><a href="{{ path('card_draw') }}">Draw</a></li>
+        <li><a href="{{ path('card_draw_more', {'num': 10}) }}">Draw more</a></li>
     </ul>
-    <p>
-        Här kommer man kunna dra ett kort och se hur många som är kvar.
-    </p>
-    </p>
+    <p>Dragna kort: {{ gameDrawNumberCards }}</p>
+    <p>Resterande kort i leken: {{ gameCardsLeftDeck }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Suit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in drawHand.getCards() %}
+            <tr>
+                <td>{{ card.getRank() }}</td>
+                <td>{{ card.getSuit() }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ include('flash.html.twig') }}
 {% endblock %}

@@ -6,15 +6,15 @@
     <h1>Card Deck</h1>
     <small> - cardGame, tillkom kmom02 -</small>
     <ul>
-        <li><a href="{{ path('card') }}">Home - Card</a></li>
-        <li><a href="{{ path('card/deck') }}">Deck</a></li>
-        <li><a href="{{ path('card/deck/shuffle') }}">Shuffle</a></li>
-        <li><a href="{{ path('card/deck/draw') }}">Draw</a></li>
-        <li><a href="{{ path('card/deck/draw/number') }}">Draw number</a></li>
+        <li><a href="{{ path('card') }}">Card, Home</a></li>
+        <li><a href="{{ path('card_reset') }}">Reset Session</a></li>
+        <li><a href="{{ path('card_deck') }}">Deck</a></li>
+        <li><a href="{{ path('card_shuffle') }}">Shuffle</a></li>
+        <li><a href="{{ path('card_draw') }}">Draw</a></li>
+        <li><a href="{{ path('card_draw_more', {'num': 10}) }}">Draw more</a></li>
     </ul>
-    <p>
-        Här kommer samtliga 52 kort att visas
-    </p>
+    <p>Här finns de {{ numberCards }} kort kvar i kortleken.</p>
+    <p>Kortleken är {{ deckStatus }}.</p>
     <table>
         <thead>
             <tr>
@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for card in sortedDeck %}
+            {% for card in gameDeck %}
             <tr>
                 <td>{{ card.rank }}</td>
                 <td>{{ card.suit }}</td>

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Card\Card;
+use App\Card\CardUtf;
 use App\Card\Deck;
+use App\Card\DeckUtf;
 use App\Card\Hand;
 use App\Card\Game;
 
@@ -15,53 +17,145 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CardController extends AbstractController
 {
-    #[Route("/card/deck", name: "card/deck")]
-    public function deck(): Response
+    #[Route("/card", name: "card")]
+    public function card(): Response
     {
-        $deck = new Deck();
-        $sortedDeck = $deck->showDeck();
-        $data = ['sortedDeck' => $sortedDeck];
+        return $this->render('card/card.html.twig');
+    }
+
+    #[Route("/card/reset", name: "card_reset")]
+    public function cardReset(
+        SessionInterface $session
+    ): Response
+    {
+        $session->invalidate();
+        return $this->render('card/card.html.twig');
+    }
+
+    #[Route("/card/deck/shuffle", name: "card_shuffle")]
+    public function shuffle(
+        SessionInterface $session
+    ): Response
+    {
+        if (empty($session->get("game_deck"))) {
+            $gameDeck = new Deck();
+            $gameDeck->shuffleDeck();
+            $drawHand = new Hand();
+            $cardsCount = count($gameDeck->getCards());
+            $session->set("game_deck", $gameDeck);
+            $session->set("game_cards_in_deck", $cardsCount);
+            $session->set("game_hand", $drawHand);
+        }
+
+        $gameDeck = $session->get("game_deck");
+        $cardsCount = $session->get("game_cards_in_deck");
+        $shuffledDeck = $gameDeck->shuffleDeck();
+        $data = [
+            'gameDeck' => $shuffledDeck,
+            'numberCards' => $cardsCount,
+            'deckStatus' => "blandad"
+        ];
         return $this->render('card/deck.html.twig', $data);
     }
 
-    #[Route("/card/deck/shuffle", name: "card/deck/shuffle")]
-    public function shuffle(): Response
+    #[Route("/card/deck", name: "card_deck")]
+    public function deck(
+        SessionInterface $session
+    ): Response
     {
-        $deck = new Deck();
-        $shuffleDeck = $deck->shuffleDeck();
-        $data = ['shuffleDeck' => $shuffleDeck];
-        return $this->render('card/shuffle.html.twig', $data);
+        if (empty($session->get("game_deck"))) {
+            $gameDeck = new Deck();
+            $gameDeck->shuffleDeck();
+            $drawHand = new Hand();
+            $cardsCount = count($gameDeck->getCards());
+            $session->set("game_deck", $gameDeck);
+            $session->set("game_cards_in_deck", $cardsCount);
+            $session->set("game_hand", $drawHand);
+        }
+
+        $gameDeck = $session->get("game_deck");
+        $cardsCount = $session->get("game_cards_in_deck");
+        $sortedDeck = $gameDeck->showDeck();
+        $data = [
+            'gameDeck' => $sortedDeck,
+            'numberCards' => $cardsCount,
+            'deckStatus' => "sorterad"
+        ];
+        return $this->render('card/deck.html.twig', $data);
     }
 
-    #[Route("/card/deck/draw", name: "card/deck/draw")]
-    public function draw(): Response
+    #[Route("/card/deck/draw", name: "card_draw")]
+    public function draw(
+        SessionInterface $session
+    ): Response
     {
-        return $this->render('card/draw.html.twig');
+        if (empty($session->get("game_deck"))) {
+            $gameDeck = new Deck();
+            $gameDeck->makeDeck();
+            $drawHand = new Hand();
+            $cardsCount = count($gameDeck->getCards());
+            $session->set("game_deck", $gameDeck);
+            $session->set("game_cards_in_deck", $cardsCount);
+            $session->set("game_hand", $drawHand);
+        }
+        
+        $gameDeck = $session->get("game_deck");
+        $drawHand = new Hand();
+        $cards = $gameDeck->draw(1);
+        foreach ($cards as $card) {
+            $drawHand->addCard($card);
+        }
+        $cardsCount = count($gameDeck->getCards());
+
+        $session->set("game_number_of_cards", 1);
+        $session->set("game_deck", $gameDeck);
+        $session->set("game_cards_in_deck", $cardsCount);
+        $session->set("game_hand", $drawHand);
+
+        $data = [
+            "gameDrawNumberCards" => $session->get("game_number_of_cards"),
+            "gameCardsLeftDeck" => $session->get("game_cards_in_deck"),
+            "drawHand" => $session->get("game_hand"),
+        ];
+
+        return $this->render('card/draw.html.twig', $data);
     }
 
-    #[Route("/card/deck/draw/number", name: "card/deck/draw/number")]
-    public function drawnumber(): Response
+    #[Route("/card/deck/draw/:{num<\d+>}", name: "card_draw_more")]
+    public function drawnumber(
+        SessionInterface $session,
+        int $num
+    ): Response
     {
-        return $this->render('card/draw_number.html.twig');
-    }
+        if (empty($session->get("game_deck"))) {
+            $gameDeck = new Deck();
+            $gameDeck->shuffleDeck();
+            $drawHand = new Hand();
+            $cardsCount = count($gameDeck->getCards());
+            $session->set("game_deck", $gameDeck);
+            $session->set("game_cards_in_deck", $cardsCount);
+            $session->set("game_hand", $drawHand);
+        }
+        
+        $gameDeck = $session->get("game_deck");
+        $drawHand = new Hand();
+        $cards = $gameDeck->draw($num);
+        foreach ($cards as $card) {
+            $drawHand->addCard($card);
+        }
+        $cardsCount = count($gameDeck->getCards());
 
-    #[Route("/card/init", name: "card/init", methods: ['GET'])]
-    public function init(): Response
-    {
-        return $this->render('card/init.html.twig');
-    }
+        $session->set("game_number_of_cards", $num);
+        $session->set("game_deck", $gameDeck);
+        $session->set("game_cards_in_deck", $cardsCount);
+        $session->set("game_hand", $drawHand);
 
-    #[Route("/card/init", name: "card/init_post", methods: ['POST'])]
-    public function initCallback(): Response
-    {
-        // Fixa sessionen
-        return $this->redirectToRoute('card/play');
-    }
+        $data = [
+            "gameDrawNumberCards" => $session->get("game_number_of_cards"),
+            "gameCardsLeftDeck" => $session->get("game_cards_in_deck"),
+            "drawHand" => $session->get("game_hand"),
+        ];
 
-    #[Route("/card/play", name: "card/play", methods: ['GET'])]
-    public function play(): Response
-    {
-        // Fixa spelet
-        return $this->render('card/play.html.twig');
+        return $this->render('card/draw.html.twig', $data);
     }
 }
