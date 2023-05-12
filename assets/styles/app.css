@@ -114,3 +114,10 @@ nav {
 .lucky {
     background-image: linear-gradient(to right, pink, red);
 }
+
+.flash-warning {
+    padding: 0.5em;
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
