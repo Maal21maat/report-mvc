@@ -4,13 +4,13 @@ namespace App\Card;
 
 class Deck
 {
-    private $cards;
+    public $cards;
 
     public function __construct() {
         $this->cards = array();
-        // create all 52 cards
-        $ranks = array('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A');
-        $suits = array('C', 'D', 'H', 'S');
+        // create 52 cards
+        $ranks = array('2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace');
+        $suits = array('Clubs', 'Diamonds', 'Hearts', 'Spades');
         foreach ($ranks as $rank) {
             foreach ($suits as $suit) {
                 $card = new CardUtf($rank, $suit);
@@ -50,7 +50,7 @@ class Deck
         return $cards;
     }
 
-    function getRankValue($rank) {
+    protected function getRankValue($rank) {
         $rankValues = array(
             '2' => 2,
             '3' => 3,
@@ -61,10 +61,10 @@ class Deck
             '8' => 8,
             '9' => 9,
             '10' => 10,
-            'J' => 11,
-            'Q' => 12,
-            'K' => 13,
-            'A' => 14
+            'Jack' => 11,
+            'Queen' => 12,
+            'King' => 13,
+            'Ace' => 14
         );
         return $rankValues[$rank];
     }

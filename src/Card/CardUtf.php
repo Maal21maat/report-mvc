@@ -7,10 +7,10 @@ class CardUtf extends Card
     public function display()
     {
         $suitsSymbols = array(
-            'C' => "\u{2663}", // ♣
-            'D' => "\u{2666}", // ♦
-            'H' => "\u{2665}", // ♥
-            'S' => "\u{2660}"  // ♠
+            'Clubs' => "\u{2663}", // ♣
+            'Diamonds' => "\u{2666}", // ♦
+            'Hearts' => "\u{2665}", // ♥
+            'Spades' => "\u{2660}"  // ♠
         );
 
         $rank = $this->getRank();
