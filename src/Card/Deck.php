@@ -6,7 +6,8 @@ class Deck
 {
     public $cards;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->cards = array();
         // create 52 cards
         $ranks = array('2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace');
@@ -19,27 +20,31 @@ class Deck
         }
     }
 
-    public function shuffleDeck() {
+    public function shuffleDeck()
+    {
         shuffle($this->cards);
         return $this->cards;
     }
 
-    public function draw($numCards = 1) {
+    public function draw($numCards = 1)
+    {
         $cards = array();
         for ($i = 0; $i < $numCards; $i++) {
-        $card = array_shift($this->cards);
-        array_push($cards, $card);
+            $card = array_shift($this->cards);
+            array_push($cards, $card);
         }
         return $cards;
     }
 
-    public function getCards() {
+    public function getCards()
+    {
         return $this->cards;
     }
 
-    public function showDeck() {
+    public function showDeck()
+    {
         $cards = $this->getCards();
-        usort($cards, function($card1, $card2) {
+        usort($cards, function ($card1, $card2) {
             if ($card1->getSuit() == $card2->getSuit()) {
                 $rank1 = $this->getRankValue($card1->getRank());
                 $rank2 = $this->getRankValue($card2->getRank());
@@ -50,7 +55,8 @@ class Deck
         return $cards;
     }
 
-    protected function getRankValue($rank) {
+    protected function getRankValue($rank)
+    {
         $rankValues = array(
             '2' => 2,
             '3' => 3,

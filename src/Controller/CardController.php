@@ -25,8 +25,7 @@ class CardController extends AbstractController
     #[Route("/card/reset", name: "card_reset")]
     public function cardReset(
         SessionInterface $session
-    ): Response
-    {
+    ): Response {
         $session->invalidate();
         return $this->render('card/card.html.twig');
     }
@@ -34,8 +33,7 @@ class CardController extends AbstractController
     #[Route("/card/deck/shuffle", name: "card_shuffle")]
     public function shuffle(
         SessionInterface $session
-    ): Response
-    {
+    ): Response {
         if (empty($session->get("game_deck"))) {
             $gameDeck = new Deck();
             $gameDeck->shuffleDeck();
@@ -60,8 +58,7 @@ class CardController extends AbstractController
     #[Route("/card/deck", name: "card_deck")]
     public function deck(
         SessionInterface $session
-    ): Response
-    {
+    ): Response {
         if (empty($session->get("game_deck"))) {
             $gameDeck = new Deck();
             $gameDeck->shuffleDeck();
@@ -86,8 +83,7 @@ class CardController extends AbstractController
     #[Route("/card/deck/draw", name: "card_draw")]
     public function draw(
         SessionInterface $session
-    ): Response
-    {
+    ): Response {
         if (empty($session->get("game_deck"))) {
             $gameDeck = new Deck();
             $drawHand = new Hand();
@@ -96,7 +92,7 @@ class CardController extends AbstractController
             $session->set("game_cards_in_deck", $cardsCount);
             $session->set("game_hand", $drawHand);
         }
-        
+
         $gameDeck = $session->get("game_deck");
         $drawHand = new Hand();
         $cards = $gameDeck->draw(1);
@@ -123,8 +119,7 @@ class CardController extends AbstractController
     public function drawnumber(
         SessionInterface $session,
         int $num
-    ): Response
-    {
+    ): Response {
         if (empty($session->get("game_deck"))) {
             $gameDeck = new Deck();
             $gameDeck->shuffleDeck();

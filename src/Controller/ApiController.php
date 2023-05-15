@@ -20,10 +20,7 @@ class ApiController extends AbstractController
     public function api(): Response
     {
         $data = [
-            // 'quote_link' => $this->generateUrl('quote'),
-            // 'deck_link' => $this->generateUrl('quote'),
-            // 'shuffle_link' => $this->generateUrl('quote'),
-            // 'draw_link' => $this->generateUrl('quote')
+            // Behövs inte nu
         ];
         return $this->render('api/api.html.twig', $data);
     }
@@ -63,16 +60,13 @@ class ApiController extends AbstractController
     #[Route("/api/deck", name: "api_deck")]
     public function deckApi(
         SessionInterface $session
-    ): Response
-    {
+    ): Response {
         $gameDeck = $session->get("game_deck");
         if (empty($gameDeck)) {
             $gameDeck = new Deck();
             $session->set("game_deck", $gameDeck);
         }
 
-
-        // $gameDeck = new Deck();
         $gameDeck = $gameDeck->showDeck();
         $deckCards = [];
         foreach ($gameDeck as $card) {
@@ -84,7 +78,6 @@ class ApiController extends AbstractController
             'gameDeck' => $deckCards,
         ];
 
-        // return new JsonResponse($data);
         $response = new JsonResponse($data);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
@@ -96,15 +89,7 @@ class ApiController extends AbstractController
     #[Route("/api/deck/shuffle", name: "api_shuffle")]
     public function shuffleApi(
         SessionInterface $session
-    ): Response
-    {
-        // $gameDeck = $session->get("game_deck");
-        // if (empty($gameDeck)) {
-        //     $gameDeck = new Deck();
-        //     $session->set("game_deck", $gameDeck);
-        // }
-
-        // starting new deck at shuffle
+    ): Response {
         $gameDeck = new Deck();
         $session->set("game_deck", $gameDeck);
         $gameDeck = $gameDeck->shuffleDeck();
@@ -118,7 +103,6 @@ class ApiController extends AbstractController
             'gameDeck' => $deckCards,
         ];
 
-        // return new JsonResponse($data);
         $response = new JsonResponse($data);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
@@ -130,8 +114,7 @@ class ApiController extends AbstractController
     #[Route("/api/deck/draw", name: "api_draw")]
     public function drawApi(
         SessionInterface $session
-    ): Response
-    {
+    ): Response {
         $gameDeck = $session->get("game_deck");
         if (empty($gameDeck)) {
             $gameDeck = new Deck();
@@ -158,7 +141,6 @@ class ApiController extends AbstractController
             'drawHand' => $drawHandCards,
         ];
 
-        // return new JsonResponse($data);
         $response = new JsonResponse($data);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
@@ -171,8 +153,7 @@ class ApiController extends AbstractController
     public function drawnumberApi(
         SessionInterface $session,
         int $num
-    ): Response
-    {
+    ): Response {
         $gameDeck = $session->get("game_deck");
         if (empty($gameDeck)) {
             $gameDeck = new Deck();
@@ -200,7 +181,6 @@ class ApiController extends AbstractController
             'drawHand' => $drawHandCards,
         ];
 
-        // return new JsonResponse($data);
         $response = new JsonResponse($data);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT

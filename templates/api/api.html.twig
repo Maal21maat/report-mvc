@@ -5,13 +5,6 @@
 {% block body %}
     <h1>Api</h1>
     <small> - api, tillkom kmom01, förfinades kmom02 -</small>
-    {# <ul>
-        <li><a href="{{ path('card') }}">Api, home</a></li>
-        <li><a href="{{ path('card_reset') }}">Quote</a></li>
-        <li><a href="{{ path('card_deck') }}">Deck</a></li>
-        <li><a href="{{ path('card_shuffle') }}">Shuffle</a></li>
-        <li><a href="{{ path('card_draw_more', {'num': 10}) }}">Draw one or more</a></li>
-    </ul> #}
 
     <p>
         Sammanställnig över alla JSON routes som finns på denna sida.
@@ -31,19 +24,5 @@
 
     <h2><a href="{{ path('api_draw_more', {'num': 10}) }}">Draw more cards</a></h2>
     <p>Visar korten som drogs (förvalt 10 st), samt antalet kort kvar i leken. Använder session med sparad kortlek.</p>
-
-    {# <form method="post" action="">
-        <p>
-            <input type="submit" name="roll" value="Roll"
-                onClick="this.form.action='{{ path('pig_roll') }}';"
-            >
-            <input type="submit" name="save" value="Save"
-                onClick="this.form.action='{{ path('pig_save') }}';"
-            >
-            <input type="submit" name="restart" value="Restart"
-                onClick="this.form.action='{{ path('pig_init_get') }}';this.form.method='get';"
-            >
-        </p>
-    </form> #}
 
 {% endblock %}
