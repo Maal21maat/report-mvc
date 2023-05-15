@@ -80,6 +80,7 @@ class ApiController extends AbstractController
         }
 
         $data = [
+            'title' => 'Deck, sortered',
             'gameDeck' => $deckCards,
         ];
 
@@ -97,14 +98,15 @@ class ApiController extends AbstractController
         SessionInterface $session
     ): Response
     {
-        $gameDeck = $session->get("game_deck");
-        if (empty($gameDeck)) {
-            $gameDeck = new Deck();
-            $session->set("game_deck", $gameDeck);
-        }
+        // $gameDeck = $session->get("game_deck");
+        // if (empty($gameDeck)) {
+        //     $gameDeck = new Deck();
+        //     $session->set("game_deck", $gameDeck);
+        // }
 
-
-        // $gameDeck = new Deck();
+        // starting new deck at shuffle
+        $gameDeck = new Deck();
+        $session->set("game_deck", $gameDeck);
         $gameDeck = $gameDeck->shuffleDeck();
         $deckCards = [];
         foreach ($gameDeck as $card) {
@@ -112,7 +114,90 @@ class ApiController extends AbstractController
         }
 
         $data = [
+            'title' => 'Deck, shuffled, and new session',
             'gameDeck' => $deckCards,
+        ];
+
+        // return new JsonResponse($data);
+        $response = new JsonResponse($data);
+        $response->setEncodingOptions(
+            $response->getEncodingOptions() | JSON_PRETTY_PRINT
+        );
+
+        return $response;
+    }
+
+    #[Route("/api/deck/draw", name: "api_draw")]
+    public function drawApi(
+        SessionInterface $session
+    ): Response
+    {
+        $gameDeck = $session->get("game_deck");
+        if (empty($gameDeck)) {
+            $gameDeck = new Deck();
+            $gameDeck = $gameDeck->shuffleDeck();
+            $session->set("game_deck", $gameDeck);
+        }
+
+        $drawHand = new Hand();
+        $cards = $gameDeck->draw(1);
+        foreach ($cards as $card) {
+            $drawHand->addCard($card);
+        }
+        $cardsCount = count($gameDeck->getCards());
+        $session->set("game_deck", $gameDeck);
+
+        $drawHandCards = [];
+        foreach ($drawHand->getCards() as $card) {
+            $drawHandCards[] = "{$card->getRank()} of {$card->getSuit()}";
+        }
+
+        $data = [
+            'title' => 'Draw 1 card',
+            'cardsInDeck' => $cardsCount,
+            'drawHand' => $drawHandCards,
+        ];
+
+        // return new JsonResponse($data);
+        $response = new JsonResponse($data);
+        $response->setEncodingOptions(
+            $response->getEncodingOptions() | JSON_PRETTY_PRINT
+        );
+
+        return $response;
+    }
+
+    #[Route("/api/deck/draw/:{num<\d+>}", name: "api_draw_more")]
+    public function drawnumberApi(
+        SessionInterface $session,
+        int $num
+    ): Response
+    {
+        $gameDeck = $session->get("game_deck");
+        if (empty($gameDeck)) {
+            $gameDeck = new Deck();
+            $gameDeck = $gameDeck->shuffleDeck();
+            $session->set("game_deck", $gameDeck);
+        }
+
+        $drawHand = new Hand();
+        $cards = $gameDeck->draw($num);
+        foreach ($cards as $card) {
+            $drawHand->addCard($card);
+        }
+        $cardsCount = count($gameDeck->getCards());
+        $session->set("game_deck", $gameDeck);
+
+        $drawHandCards = [];
+        foreach ($drawHand->getCards() as $card) {
+            $drawHandCards[] = "{$card->getRank()} of {$card->getSuit()}";
+        }
+
+        $data = [
+            'title' => 'Draw many card',
+            'DrawNumberOfCards' => $num,
+            'cardsInDeck' => $cardsCount,
+            'drawHand' => $drawHandCards,
         ];
 
         // return new JsonResponse($data);

@@ -21,13 +21,16 @@
     <p>Slumpar fram dagens quote, meddelar dagens datum och tidpunkt.</p>
 
     <h2><a href="{{ path('api_deck') }}">Deck</a></h2>
-    <p>Visar kortleken, sorterad.</p>
+    <p>Visar kortleken, sorterad. Använder session med sparad kortlek.</p>
 
     <h2><a href="{{ path('api_shuffle') }}">Shuffle</a></h2>
-    <p>Visar kortleken, balandad.</p>
+    <p>Visar kortleken, blandad. Här skapas ny kortlek om.</p>
 
-    <h2>Draw</h2>
-    <p>Info</p>
+    <h2><a href="{{ path('api_draw') }}">Draw 1 card</a></h2>
+    <p>Visar kortet som drogs, samt antalet kort kvar i leken. Använder session med sparad kortlek.</p>
+
+    <h2><a href="{{ path('api_draw_more', {'num': 10}) }}">Draw more cards</a></h2>
+    <p>Visar korten som drogs (förvalt 10 st), samt antalet kort kvar i leken. Använder session med sparad kortlek.</p>
 
     {# <form method="post" action="">
         <p>
